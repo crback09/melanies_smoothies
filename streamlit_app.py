@@ -1,5 +1,10 @@
 # Import python packages
 import streamlit as st
+
+
+# Establish connection using the configuration in secrets.toml
+conn = st.connection("snowflake")
+session = conn.session()
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -13,7 +18,15 @@ name_on_order = st.text_input('Name on Smoothie')
 st.write('The name on your Smoothie will be:',name_on_order)
 
 # Connect to Snowflake and get fruit options
-cnx = st.connection("snowflake")
+cnx = st.connection("snowflake",
+      account = "DGIVXIM-RNB69144",
+      user = "CRBACK09",
+      authenticator = "externalbrowser",
+      role = "SYSADMIN",
+      warehouse = "COMPUTE_WH",
+      database = "SMOOTHIES",
+      schema = "PUBLIC",
+)
 session = cnx.session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
 #st.dataframe(data=my_dataframe, use_container_width=True)
