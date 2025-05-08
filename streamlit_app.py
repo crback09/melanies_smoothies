@@ -36,7 +36,11 @@ if ingredients_list:
         INSERT INTO smoothies.public.orders (ingredients, name_on_order)
         VALUES ('{ingredients_string.strip()}', '{name_on_order}')
     """
-
+#New section to display smoothiefroot nutrition information
+import requests
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
+    
     # Optional: debug the SQL before executing
     # st.write(my_insert_stmt)
     # st.stop()
