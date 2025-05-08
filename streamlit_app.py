@@ -34,27 +34,23 @@ ingredients_list = st.multiselect(
 
 # Only proceed if ingredients are selected
 if ingredients_list:
-        ingredients_string = ''
-    
-        for fruit_chosen in ingredients_list:
-                ingredients_string += fruit_chosen + ' '
+    ingredients_string = ''
 
-                search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
-                st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
-        
-                st.subheader(fruit_chosen + 'Nutrition Information')
-                smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
-                sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+    for fruit_chosen in ingredients_list:
+        ingredients_string += fruit_chosen + ' '
+
+        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen, ' is ', search_on, '.')
+
+        st.subheader(fruit_chosen + ' Nutrition Information')
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
+        st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
     # Create SQL insert statement with both columns
     my_insert_stmt = f"""
         INSERT INTO smoothies.public.orders (ingredients, name_on_order)
         VALUES ('{ingredients_string.strip()}', '{name_on_order}')
     """
-        
-    # Optional: debug the SQL before executing
-    # st.write(my_insert_stmt)
-    # st.stop()
 
     # Button to trigger the insert
     time_to_insert = st.button('Submit Order')
