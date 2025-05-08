@@ -37,9 +37,9 @@ if ingredients_list:
         VALUES ('{ingredients_string.strip()}', '{name_on_order}')
     """
 #New section to display smoothiefroot nutrition information
-import requests
-smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
-st.text(smoothiefroot_response)
+  import requests
+  smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+  st.text(smoothiefroot_response)
     
     # Optional: debug the SQL before executing
     # st.write(my_insert_stmt)
